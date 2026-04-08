@@ -28,6 +28,7 @@ export default function Navbar() {
         <input
           type="text"
           placeholder="Search..."
+          aria-label="Search (coming soon)"
           className="bg-transparent text-sm text-gray-300 placeholder-gray-500 focus:outline-none w-full"
           readOnly
         />

@@ -4,7 +4,6 @@ const { auth } = require('../middleware/auth');
 const User = require('../models/User');
 
 const VALID_PLANS = ['free', 'premium', 'pro'];
-const PLAN_VALUES = { free: 'free', premium: 'premium', pro: 'pro' };
 
 // GET /api/membership - returns current user's membership info
 router.get('/', auth, async (req, res) => {
@@ -23,11 +22,10 @@ router.post('/subscribe', auth, async (req, res) => {
     if (!plan || !VALID_PLANS.includes(plan)) {
       return res.status(400).json({ message: 'Invalid plan. Must be free, premium, or pro.' });
     }
-    const safePlan = PLAN_VALUES[plan];
     const user = await User.findByIdAndUpdate(
       req.user._id,
       {
-        'membership.plan': safePlan,
+        'membership.plan': plan,
         'membership.status': 'active',
         'membership.startDate': new Date(),
       },
