@@ -14,13 +14,13 @@ A full-stack web application for tracking gym workouts, logging progress, and vi
 
 ## Tech Stack
 
-| Layer     | Technology                              |
-|-----------|------------------------------------------|
-| Backend   | Node.js, Express.js, MongoDB, Mongoose  |
-| Frontend  | React.js, Tailwind CSS, Recharts        |
-| Auth      | JWT (jsonwebtoken + bcryptjs)           |
-| HTTP      | Axios                                   |
-| Container | Docker + Docker Compose                 |
+| Layer     | Technology                             |
+|-----------|----------------------------------------|
+| Backend   | Node.js, Express.js, MongoDB, Mongoose |
+| Frontend  | React.js, Tailwind CSS, Recharts       |
+| Auth      | JWT (jsonwebtoken + bcryptjs)          |
+| HTTP      | Axios                                  |
+| Container | Docker + Docker Compose                |
 
 ## Prerequisites
 

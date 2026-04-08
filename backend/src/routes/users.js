@@ -54,7 +54,7 @@ router.put('/goals', auth, async (req, res, next) => {
     if (targetWeight !== undefined) update.fitnessGoals.targetWeight = targetWeight;
     if (weeklyWorkoutGoal !== undefined) update.fitnessGoals.weeklyWorkoutGoal = weeklyWorkoutGoal;
 
-    const user = await User.findByIdAndUpdate(req.user._id, update, {
+    const user = await User.findByIdAndUpdate(String(req.user._id), { $set: update }, {
       new: true,
       runValidators: true,
     }).select('-password');
