@@ -34,7 +34,7 @@ router.put(
       if (height !== undefined) update.height = height;
       if (weight !== undefined) update.weight = weight;
 
-      const user = await User.findByIdAndUpdate(String(req.user._id), update, {
+      const user = await User.findByIdAndUpdate(String(req.user._id), { $set: update }, {
         new: true,
         runValidators: true,
       }).select('-password');
