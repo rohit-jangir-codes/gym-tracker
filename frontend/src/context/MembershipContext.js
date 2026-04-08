@@ -4,19 +4,21 @@ import { useAuth } from './AuthContext';
 
 const MembershipContext = createContext(null);
 
+const DEFAULT_MEMBERSHIP = { plan: 'free', status: 'active' };
+
 export function MembershipProvider({ children }) {
   const { user } = useAuth();
-  const [membership, setMembership] = useState({ plan: 'free', status: 'active' });
+  const [membership, setMembership] = useState(DEFAULT_MEMBERSHIP);
   const [loading, setLoading] = useState(false);
 
   const fetchMembership = useCallback(async () => {
-    if (!user) { setMembership({ plan: 'free', status: 'active' }); return; }
+    if (!user) { setMembership(DEFAULT_MEMBERSHIP); return; }
     setLoading(true);
     try {
       const { data } = await api.get('/membership');
       setMembership(data);
     } catch {
-      setMembership({ plan: 'free', status: 'active' });
+      setMembership(DEFAULT_MEMBERSHIP);
     } finally {
       setLoading(false);
     }
