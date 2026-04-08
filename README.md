@@ -54,7 +54,7 @@ npm install
 cp .env.example .env
 # Edit .env with your values
 ```
-
+dev
 ### 4. Run development servers
 
 **Terminal 1 – Backend:**
