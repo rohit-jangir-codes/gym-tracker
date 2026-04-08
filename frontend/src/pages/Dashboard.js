@@ -31,7 +31,7 @@ export default function Dashboard() {
           value={summary.workoutsThisWeek}
           icon="🏋️"
           color="indigo"
-          sub={`Goal: ${summary.workoutsThisWeek} / ${summary.goalProgressPercent}%`}
+          sub={`Weekly goal: ${summary.workoutsThisWeek} / ${summary.weeklyGoal ?? 3} workouts`}
         />
         <StatsCard
           title="Current Weight"

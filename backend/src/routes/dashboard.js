@@ -63,6 +63,7 @@ router.get('/summary', auth, async (req, res, next) => {
       workoutsThisWeek,
       currentWeight,
       targetWeight,
+      weeklyGoal,
       goalProgressPercent,
       weightTrend,
       weeklyFrequency,
