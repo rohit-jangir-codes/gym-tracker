@@ -22,6 +22,7 @@ export default function Navbar() {
   return (
     <header className="bg-gray-900 border-b border-gray-700 px-6 py-4 flex items-center justify-between lg:pl-6 pl-14">
       {/* Search bar */}
+      {/* Cosmetic search bar — placeholder for future search functionality */}
       <div className="flex items-center gap-2 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 w-48 sm:w-64">
         <span className="text-gray-500 text-sm">🔍</span>
         <input
