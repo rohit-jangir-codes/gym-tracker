@@ -1,16 +1,27 @@
 # Gym Progress Tracker
 
-A full-stack web application for tracking gym workouts, logging progress, and visualizing fitness data over time.
+A full-stack web application for tracking gym workouts, logging progress, visualizing fitness data, and managing memberships — with an AI Gym Coach for Pro users.
 
 ## Features
 
+### Core Features
 - **User Authentication** – Register/login with JWT-based auth
 - **Workout Plans** – Create and manage structured workout plans with exercises
 - **Workout Logs** – Log daily workouts with sets, reps, weight, and duration
 - **Progress Tracker** – Track weight, body fat, and body measurements over time
-- **Dashboard** – Overview stats and charts (weight trend, weekly workout frequency)
+- **Dashboard** – Overview stats, charts (weight trend, weekly frequency), profile card
 - **Admin Panel** – Admin users can view all registered users
-- **Responsive Dark UI** – Modern dark dashboard with Tailwind CSS
+
+### New Features (v2)
+- **Home Page** – Landing page with hero section and feature overview
+- **About Page** – Mission statement and what-we-offer cards
+- **Community Page** – Community benefits and member stats
+- **Contact Page** – Support contact info and inquiry form
+- **Membership Plans** – Free / Premium / Pro tiers with functional plan switching
+- **Workout Programs** – Browse 12 sample programs with muscle group + difficulty filters
+- **AI Gym Coach** – Floating chat widget (Pro plan only) with keyword-based responses
+- **Feature Gating** – Backend middleware + frontend UI state based on membership plan
+- **Responsive Dark UI** – Dark theme with green accents, consistent across all pages
 
 ## Tech Stack
 
@@ -156,4 +167,53 @@ node scripts/createAdmin.js you@example.com securepassword "Your Name"
 | Method | Route            | Description       |
 |--------|------------------|-------------------|
 | GET    | /api/admin/users | List all users    |
+
+### Membership
+| Method | Route                       | Description                        |
+|--------|-----------------------------|------------------------------------|
+| GET    | /api/membership             | Get current user's membership plan |
+| POST   | /api/membership/subscribe   | Subscribe to a plan (free/premium/pro) |
+| POST   | /api/membership/cancel      | Cancel plan (reverts to free)      |
+
+### Workouts (Public)
+| Method | Route          | Description                       |
+|--------|----------------|-----------------------------------|
+| GET    | /api/workouts  | List 12 sample workout programs   |
+
+## Membership Plans & Feature Gating
+
+| Feature                        | Free | Premium | Pro |
+|-------------------------------|:----:|:-------:|:---:|
+| Basic workout tracking         | ✅   | ✅      | ✅  |
+| Community access               | ✅   | ✅      | ✅  |
+| Advanced analytics             | ❌   | ✅      | ✅  |
+| Personalized workout plans     | ❌   | ✅      | ✅  |
+| AI Gym Coach chat widget       | ❌   | ❌      | ✅  |
+| 1-on-1 guidance                | ❌   | ❌      | ✅  |
+
+### Testing Membership Gating
+
+1. Register / login with any account
+2. Go to **Membership** (sidebar → 👑 Membership)
+3. Subscribe to **Pro** plan — the **AI Gym Coach** floating button (bottom-right) becomes interactive
+4. Subscribe to **Free** plan — the AI Coach button shows a "Pro Required" tooltip
+5. Subscribe to **Premium** — the Advanced Analytics banner appears on the Dashboard
+
+**Or use the seeded test user** (`user@example.com` / `password123`) which already has the Premium plan.
+
+To test Pro features:
+1. Log in as `user@example.com` / `password123`
+2. Go to Membership → click **Subscribe** on the Pro card
+3. Navigate to Dashboard — the 🤖 AI Coach widget (bottom-right) is now active
+
+### Backend feature gating
+
+The `requirePlan` middleware can be applied to any route:
+
+```js
+const requirePlan = require('./src/middleware/requirePlan');
+
+router.get('/premium-analytics', auth, requirePlan('premium'), handler);
+router.get('/ai-coach',          auth, requirePlan('pro'),     handler);
+```
 
