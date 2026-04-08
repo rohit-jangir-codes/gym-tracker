@@ -37,9 +37,17 @@ router.get('/:id', auth, async (req, res, next) => {
 // PUT /api/progress/:id
 router.put('/:id', auth, async (req, res, next) => {
   try {
+    const { date, weight, bodyFat, measurements, notes } = req.body;
+    const update = {};
+    if (date !== undefined) update.date = date;
+    if (weight !== undefined) update.weight = weight;
+    if (bodyFat !== undefined) update.bodyFat = bodyFat;
+    if (measurements !== undefined) update.measurements = measurements;
+    if (notes !== undefined) update.notes = notes;
+
     const entry = await Progress.findOneAndUpdate(
       { _id: req.params.id, user: req.user._id },
-      req.body,
+      { $set: update },
       { new: true, runValidators: true }
     );
     if (!entry) return res.status(404).json({ message: 'Entry not found' });

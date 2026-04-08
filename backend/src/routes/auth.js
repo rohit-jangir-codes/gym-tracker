@@ -31,10 +31,10 @@ router.post(
 
     try {
       const { name, email, password } = req.body;
-      if (await User.findOne({ email }))
+      if (await User.findOne({ email: String(email) }))
         return res.status(400).json({ message: 'Email already registered' });
 
-      const user = await User.create({ name, email, password });
+      const user = await User.create({ name, email: String(email), password });
       res.status(201).json({
         token: generateToken(user._id),
         user: { _id: user._id, name: user.name, email: user.email, role: user.role },
@@ -59,7 +59,7 @@ router.post(
 
     try {
       const { email, password } = req.body;
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email: String(email) });
       if (!user || !(await user.matchPassword(password)))
         return res.status(401).json({ message: 'Invalid credentials' });
 

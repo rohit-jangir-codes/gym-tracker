@@ -46,9 +46,16 @@ router.get('/:id', auth, async (req, res, next) => {
 // PUT /api/workout-plans/:id
 router.put('/:id', auth, async (req, res, next) => {
   try {
+    const { name, description, days, exercises } = req.body;
+    const update = {};
+    if (name !== undefined) update.name = name;
+    if (description !== undefined) update.description = description;
+    if (days !== undefined) update.days = days;
+    if (exercises !== undefined) update.exercises = exercises;
+
     const plan = await WorkoutPlan.findOneAndUpdate(
       { _id: req.params.id, user: req.user._id },
-      req.body,
+      { $set: update },
       { new: true, runValidators: true }
     );
     if (!plan) return res.status(404).json({ message: 'Plan not found' });

@@ -42,9 +42,17 @@ router.get('/:id', auth, async (req, res, next) => {
 // PUT /api/workout-logs/:id
 router.put('/:id', auth, async (req, res, next) => {
   try {
+    const { date, plan, exercises, duration, notes } = req.body;
+    const update = {};
+    if (date !== undefined) update.date = date;
+    if (plan !== undefined) update.plan = plan;
+    if (exercises !== undefined) update.exercises = exercises;
+    if (duration !== undefined) update.duration = duration;
+    if (notes !== undefined) update.notes = notes;
+
     const log = await WorkoutLog.findOneAndUpdate(
       { _id: req.params.id, user: req.user._id },
-      req.body,
+      { $set: update },
       { new: true, runValidators: true }
     );
     if (!log) return res.status(404).json({ message: 'Log not found' });
