@@ -36,6 +36,7 @@ async function seed() {
     height: 175,
     weight: 85,
     fitnessGoals: { targetWeight: 80, weeklyWorkoutGoal: 3 },
+    membership: { plan: 'premium', status: 'active', startDate: new Date() },
   });
 
   // Create workout plans

@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema(
       targetWeight: { type: Number },
       weeklyWorkoutGoal: { type: Number, default: 3 },
     },
+    membership: {
+      plan: { type: String, enum: ['free', 'premium', 'pro'], default: 'free' },
+      status: { type: String, enum: ['active', 'cancelled'], default: 'active' },
+      startDate: { type: Date },
+      endDate: { type: Date },
+    },
   },
   { timestamps: true }
 );

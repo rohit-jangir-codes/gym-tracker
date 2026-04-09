@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useMembership } from '../context/MembershipContext';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: '📊' },
+  { to: '/workouts', label: 'Workouts', icon: '🏋️‍♂️' },
   { to: '/workout-plans', label: 'Workout Plans', icon: '📋' },
   { to: '/workout-logs', label: 'Workout Logs', icon: '📝' },
   { to: '/progress', label: 'Progress', icon: '📈' },
+  { to: '/membership', label: 'Membership', icon: '👑' },
   { to: '/profile', label: 'Profile', icon: '👤' },
 ];
 
+const PLAN_BADGE = {
+  free: 'bg-gray-700 text-gray-400',
+  premium: 'bg-yellow-500/20 text-yellow-400',
+  pro: 'bg-green-500/20 text-green-400',
+};
+
 export default function Sidebar() {
   const { user } = useAuth();
+  const { membership } = useMembership();
   const [open, setOpen] = useState(false);
 
   const links = user?.role === 'admin'
@@ -46,8 +56,11 @@ export default function Sidebar() {
       </nav>
       {user && (
         <div className="p-4 border-t border-gray-700">
-          <p className="text-gray-400 text-xs truncate">{user.email}</p>
           <p className="text-gray-300 text-sm font-medium truncate">{user.name}</p>
+          <p className="text-gray-400 text-xs truncate mb-2">{user.email}</p>
+          <span className={`text-xs font-bold px-2 py-0.5 rounded-full capitalize ${PLAN_BADGE[membership?.plan] ?? PLAN_BADGE.free}`}>
+            {membership?.plan ?? 'free'} plan
+          </span>
         </div>
       )}
     </div>
